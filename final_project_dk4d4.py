@@ -7,9 +7,9 @@ def get_employees_country(mycursor):
     country_choice = input("Enter a country name for specific country or (ALL) to view all countries: ")
 
     #create sql query based on user input
-    if country_choice.lower():
+    if country_choice.lower() == 'all':
         sql_query = f"Select * from EmployeesPerCountry where country_name = '{country_choice}'"
-    elif country_choice.lower() == "All":
+    else:
         sql_query = "Select * from EmployeesPerCountry"
 
     #execute the query
