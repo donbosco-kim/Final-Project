@@ -19,11 +19,15 @@ def get_employees_country(mycursor):
     #get the query result
     query_result = mycursor.fetchall()
 
-    #loop through results and show the number of employees in UK
+    #loop through the query_result and show the results
     print("\n-----Number of Employees Per Country-----\n")
     for record in query_result:
-        print(f"{record[0]}: {record[1]}")
-
+        #check if the user entered country exists in the database and if not, show the second print statement
+        if country_choice.lower() == record[0].lower():
+            print(f"{record[0]}: {record[1]} employees")
+        else:
+            print(f"There are no employees in {country_choice} country")
+            
     return
 
 def print_menu():
