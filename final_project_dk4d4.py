@@ -38,14 +38,14 @@ def print_menu():
     print("---------------------")
     print("------------- VIEW DATA -------------")
     print("1. View employee count data per country")
-    print("2. Show number of managers per department")
-    print("3. Show the job titles with the most dependents")
-    print("4. Show number of department hires in 1998")
-    print("5. Show average salary for programmers")
-    print("6. Show department name with the lowest average salary")
-    print("7. Show employees with no dependents")
-    print("8. Show regions with no locations")
-    print("8. Exit Application")
+    print("2. View manager count by department")
+    print("3. View dependent data per job title")
+    print("4. View hiring data by year and department")
+    print("5. View average salary data by job title")
+    print("6. View average salary data by department")
+    print("7. View dependent data by employee")
+    print("8. View location data by region")
+    print("17. Exit Application")
     return
 
 def get_user_choice():
