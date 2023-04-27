@@ -4,13 +4,13 @@ import mysql.connector
 def get_employees_country(mycursor):
 
     #get user input to view country data
-    country_choice = input("Enter a country name for specific country or (ALL) to view all countries: ")
+    user_choice = input("Enter a country name for specific country or (ALL) to view all countries: ")
 
     #create sql query based on user input
-    if country_choice.lower() == 'all':
+    if user_choice.upper() == 'ALL':
         sql_query = "Select * from EmployeesPerCountry"
     else:
-        sql_query = f"Select * from EmployeesPerCountry where country_name = '{country_choice}'"
+        sql_query = f"Select * from EmployeesPerCountry where country_name = '{user_choice}'"
         
 
     #execute the query
@@ -21,13 +21,16 @@ def get_employees_country(mycursor):
 
     #loop through the query_result and show the results
     print("\n-----Number of Employees Per Country-----\n")
+    found = False
     for record in query_result:
-        #check if the user entered country exists in the database and if not, show the second print statement
-        if country_choice.lower() == record[0].lower():
+        #check if the user entered country exists in the database and if not found and not equal to 'ALL', print the second if statement
+        if user_choice.upper() == record[0].upper() or user_choice.upper() == 'ALL':
             print(f"{record[0]}: {record[1]} employees")
-        else:
-            print(f"There are no employees in {country_choice} country")
-            
+            found = True
+
+    if not found:
+        print(f"There are no employees in {user_choice} country")
+
     return
 
 def print_menu():
