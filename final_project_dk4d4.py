@@ -8,10 +8,10 @@ def get_employees_country(mycursor):
 
     #create sql query based on user input
     if country_choice.lower():
-        sql_query = "Select * from EmployeesPerCountry"
-    else:
         sql_query = f"Select * from EmployeesPerCountry where country_name = '{country_choice}'"
-        
+    else:
+        sql_query = "Select * from EmployeesPerCountry"
+
     #execute the query
     mycursor.execute(sql_query)
 
