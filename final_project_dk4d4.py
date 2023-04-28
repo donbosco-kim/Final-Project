@@ -127,6 +127,99 @@ def get_dept_hired_byyear(mycursor):
 
     return
 
+def get_avg_salary_bytitle(mycursor):
+    #get user input to view country data
+    user_choice = input("Enter job title or (ALL) for average salary data for all job titles: ")
+
+    #create sql query based on user input
+    if user_choice.upper() == 'ALL':
+        sql_query = "Select * from AvgSalaryByJobTitle"
+    else:
+        sql_query = f"Select * from AvgSalaryByJobTitle where job_title = '{user_choice}'"
+        
+
+    #execute the query
+    mycursor.execute(sql_query)
+
+    #get the query result
+    query_result = mycursor.fetchall()
+
+    #loop through the query_result and show the results
+    print("\n-----Average salary per job titles-----\n")
+    found = False
+    for record in query_result:
+        #check if the user entered dept name exists in the database and if it doesnt exist and not equal to 'ALL', print the second if statement
+        if user_choice.upper() == record[0].upper() or user_choice.upper() == 'ALL':
+            print(f"\n{record[0]}: ${round(record[1], 2)}")
+            found = True
+
+    if not found:
+        print(f"There is no salary data for {user_choice} department")
+
+    return
+
+def get_avg_salary_bydept(mycursor):
+    #get user input to view country data
+    user_choice = input("Enter the department or (ALL) for average salary by department: ")
+
+    #create sql query based on user input
+    if user_choice.upper() == 'ALL':
+        sql_query = "Select * from AvgSalaryByDepartment"
+    else:
+        sql_query = f"Select * from AvgSalaryByDepartment where department_name = '{user_choice}'"
+        
+
+    #execute the query
+    mycursor.execute(sql_query)
+
+    #get the query result
+    query_result = mycursor.fetchall()
+
+    #loop through the query_result and show the results
+    print("\n-----JAverage Salaries by Department-----\n")
+    found = False
+    for record in query_result:
+        #check if the user entered dept name exists in the database and if it doesnt exist and not equal to 'ALL', print the second if statement
+        if user_choice.upper() == record[0].upper() or user_choice.upper() == 'ALL':
+            print(f"\n{record[0]}: ${round(record[1], 2)}")
+            found = True
+
+    if not found:
+        print(f"There is no salary data for {user_choice} department")
+
+    return
+
+def get_dependent_data_byemployee(mycursor):
+    #get user input to view country data
+    user_choice = input("Enter employee first name and last name or (ALL) to view data for all job titles: ")
+
+    #create sql query based on user input
+    if user_choice.upper() == 'ALL':
+        sql_query = "Select * from EmployeeDependents"
+    else:
+        sql_query = f"Select * from EmployeeDependents where first_name = '{user_choice}' and last_name = '{user_choice}'"
+        
+
+    #execute the query
+    mycursor.execute(sql_query)
+
+    #get the query result
+    query_result = mycursor.fetchall()
+
+    #loop through the query_result and show the results
+    print("\n-----Employees with Dependents-----\n")
+    found = False
+    for record in query_result:
+        #check if the user entered dept name exists in the database and if it doesnt exist and not equal to 'ALL', print the second if statement
+        if user_choice.upper() == record[0].upper() and user_choice.upper() == record[1].upper() or user_choice.upper() == 'ALL':
+            print(f"\n{record[0]} {record[1]}: {record[4]} dependents")
+            found = True
+
+    if not found:
+        print(f"There are no dependents data for {user_choice}")
+
+    return
+
 
 def print_menu():
     print("\nChoose an option")
@@ -175,6 +268,12 @@ def main():
                 get_dependent_data_perjob(mycursor)
             elif user_choice == 4:
                 get_dept_hired_byyear(mycursor)
+            elif user_choice == 5:
+                get_avg_salary_bytitle(mycursor)
+            elif user_choice == 6:
+                get_avg_salary_bydept(mycursor)
+            elif user_choice == 7:
+                get_dependent_data_byemployee(mycursor)
             elif user_choice == 9:
                 print("Bye!!!")
                 break
