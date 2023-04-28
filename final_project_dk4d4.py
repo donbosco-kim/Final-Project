@@ -33,6 +33,38 @@ def get_employees_country(mycursor):
 
     return
 
+def get_manager_count_dept(mycursor):
+    #get user input to view country data
+    user_choice = input("Enter department name for specific department or (ALL) to view all departments: ")
+
+    #create sql query based on user input
+    if user_choice.upper() == 'ALL':
+        sql_query = "Select department_name, COUNT(department_name) AS 'Number of Managers' From managers group by department_name order by COUNT(department_name) desc"
+    else:
+        sql_query = f"Select department_name, COUNT(department_name) AS 'Number of Managers' from managers where department_name = '{user_choice}'"
+        
+
+    #execute the query
+    mycursor.execute(sql_query)
+
+    #get the query result
+    query_result = mycursor.fetchall()
+
+    #loop through the query_result and show the results
+    print("\n-----Managers Per Department-----\n")
+    found = False
+    for record in query_result:
+        #check if the user entered dept name exists in the database and if it doesnt exist and not equal to 'ALL', print the second if statement
+        if user_choice.upper() == record[0].upper() or user_choice.upper() == 'ALL':
+            print(f"{record[0]} Department: {record[1]} managers")
+            found = True
+
+    if not found:
+        print(f"There are no managers in {user_choice} department")
+
+    return
+
+
 def print_menu():
     print("\nChoose an option")
     print("---------------------")
@@ -74,6 +106,8 @@ def main():
             user_choice = get_user_choice()
             if user_choice == 1:
                 get_employees_country(mycursor)
+            elif user_choice == 2:
+                get_manager_count_dept(mycursor)
             elif user_choice == 9:
                 print("Bye!!!")
                 break
