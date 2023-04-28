@@ -254,7 +254,7 @@ def get_location_data_byregion(mycursor):
 
 def print_menu():
     print("\nChoose an option")
-    print("---------------------")
+    print("-------------------------------------")
     print("------------- VIEW DATA -------------")
     print("1. View employee count data per country")
     print("2. View manager count by department")
@@ -264,6 +264,18 @@ def print_menu():
     print("6. View average salary data by department")
     print("7. View dependent data by employee")
     print("8. View location data by region")
+    print("\n-------- ADD DATA ---------")
+    print("9. Add a dependent")
+    print("10. Add a job")
+    print("\n-------- DELETE DATA ---------")
+    print("11. Delete an employee")
+    print("12. Delete a dependent")
+    print("\n-------- UPDATE DATA ---------")
+    print("13. Update employee first name")
+    print("14. Update employee last name")
+    print("15. Update job minimum salary")
+    print("16. Update job maximum salary")
+    print("\n-------- EXIT --------")    
     print("17. Exit Application")
     return
 
