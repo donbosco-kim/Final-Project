@@ -41,7 +41,7 @@ def get_manager_count_dept(mycursor):
     if user_choice.upper() == 'ALL':
         sql_query = "Select department_name, COUNT(department_name) AS 'Number of Managers' From managers group by department_name order by COUNT(department_name) desc"
     else:
-        sql_query = f"Select department_name, COUNT(department_name) AS 'Number of Managers' from managers where department_name = '{user_choice}'"
+        sql_query = f"Select department_name, COUNT(department_name) AS 'Number of Managers' from managers where department_name = '{user_choice}'group by department_name order by COUNT(department_name) desc"
         
 
     #execute the query
