@@ -189,7 +189,7 @@ def get_avg_salary_bydept(mycursor):
 
     return
 
-def get_dependent_data_byemployee(mycursor):
+def get_dependent_data_byemployee(mycursor): 
     #get user input to view country data
     user_choice = input("Enter employee first name and last name or (ALL) to view data for all job titles: ")
 
@@ -197,7 +197,7 @@ def get_dependent_data_byemployee(mycursor):
     if user_choice.upper() == 'ALL':
         sql_query = "Select * from EmployeeDependents"
     else:
-        sql_query = f"Select * from EmployeeDependents where first_name = '{user_choice}' and last_name = '{user_choice}'"
+        sql_query = f"Select * from EmployeeDependents where first_name = '{user_choice.split()[0]}' and last_name = '{user_choice.split()[1]}'"
         
 
     #execute the query
@@ -211,12 +211,43 @@ def get_dependent_data_byemployee(mycursor):
     found = False
     for record in query_result:
         #check if the user entered dept name exists in the database and if it doesnt exist and not equal to 'ALL', print the second if statement
-        if user_choice.upper() == record[0].upper() and user_choice.upper() == record[1].upper() or user_choice.upper() == 'ALL':
+        if user_choice.upper() == 'ALL' or record[0].upper() == user_choice.split()[0].upper() and record[1].upper() == user_choice.split()[1].upper():
             print(f"\n{record[0]} {record[1]}: {record[4]} dependents")
             found = True
 
     if not found:
         print(f"There are no dependents data for {user_choice}")
+
+    return
+
+def get_location_data_byregion(mycursor):
+    #get user input to view country data
+    user_choice = input("Enter a region or (ALL) for location data for all regions: ")
+
+    #create sql query based on user input
+    if user_choice.upper() == 'ALL':
+        sql_query = "Select * from CountryLocation"
+    else:
+        sql_query = f"Select * from CountryLocation where region_name = '{user_choice}'"
+        
+
+    #execute the query
+    mycursor.execute(sql_query)
+
+    #get the query result
+    query_result = mycursor.fetchall()
+
+    #loop through the query_result and show the results
+    print("\n-----Location data by region-----\n")
+    found = False
+    for record in query_result:
+        #check if the user entered dept name exists in the database and if it doesnt exist and not equal to 'ALL', print the second if statement
+        if user_choice.upper() == record[0].upper() or user_choice.upper() == 'ALL':
+            print(f"\n{record[0]}: {record[1]}")
+            found = True
+
+    if not found:
+        print(f"There is no location data for {user_choice} region")
 
     return
 
@@ -274,7 +305,9 @@ def main():
                 get_avg_salary_bydept(mycursor)
             elif user_choice == 7:
                 get_dependent_data_byemployee(mycursor)
-            elif user_choice == 9:
+            elif user_choice == 8:
+                get_location_data_byregion(mycursor)
+            elif user_choice == 17:
                 print("Bye!!!")
                 break
             else:
