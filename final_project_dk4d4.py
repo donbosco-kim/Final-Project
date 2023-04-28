@@ -95,6 +95,38 @@ def get_dependent_data_perjob(mycursor):
 
     return
 
+def get_dept_hired_byyear(mycursor):
+    #get user input to view country data
+    
+    user_choice = input("Enter year or (ALL) to view hiring data for all years in departments: ")
+    
+    #create sql query based on user input
+    if user_choice.upper() == 'ALL':
+        sql_query = "Select * from DepartmentHiresByYear"
+    else:
+        sql_query = f"Select * from DepartmentHiresByYear where year = '{int(user_choice)}'" #convert user input to int if not it does not work 
+        
+
+    #execute the query
+    mycursor.execute(sql_query)
+
+    #get the query result
+    query_result = mycursor.fetchall()
+
+    #loop through the query_result and show the results
+    print("\n-----All hired department by years-----\n")
+    found = False
+    for record in query_result:
+        #check if the user entered dept name exists in the database and if it doesnt exist and not equal to 'ALL', print the second if statement
+        if user_choice.upper() == 'ALL' or int(user_choice) == record[0]:
+            print(f"\n{record[0]} {record[1]}: {record[2]} hires")
+            found = True
+
+    if not found:
+        print(f"There is no hiring data for year {user_choice}")
+
+    return
+
 
 def print_menu():
     print("\nChoose an option")
@@ -141,6 +173,8 @@ def main():
                 get_manager_count_dept(mycursor)
             elif user_choice == 3:
                 get_dependent_data_perjob(mycursor)
+            elif user_choice == 4:
+                get_dept_hired_byyear(mycursor)
             elif user_choice == 9:
                 print("Bye!!!")
                 break
