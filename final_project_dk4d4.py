@@ -64,6 +64,37 @@ def get_manager_count_dept(mycursor):
 
     return
 
+def get_dependent_data_perjob(mycursor):
+    #get user input to view country data
+    user_choice = input("Enter job title or (ALL) to view data for all job titles: ")
+
+    #create sql query based on user input
+    if user_choice.upper() == 'ALL':
+        sql_query = "Select * from DependentsByJobTitle"
+    else:
+        sql_query = f"Select * from DependentsByJobTitle where job_title = '{user_choice}'"
+        
+
+    #execute the query
+    mycursor.execute(sql_query)
+
+    #get the query result
+    query_result = mycursor.fetchall()
+
+    #loop through the query_result and show the results
+    print("\n-----Job Titles with the most Dependents-----\n")
+    found = False
+    for record in query_result:
+        #check if the user entered dept name exists in the database and if it doesnt exist and not equal to 'ALL', print the second if statement
+        if user_choice.upper() == record[0].upper() or user_choice.upper() == 'ALL':
+            print(f"{record[0]}: {record[1]} dependents")
+            found = True
+
+    if not found:
+        print(f"There are no dependents in {user_choice} job title")
+
+    return
+
 
 def print_menu():
     print("\nChoose an option")
@@ -108,6 +139,8 @@ def main():
                 get_employees_country(mycursor)
             elif user_choice == 2:
                 get_manager_count_dept(mycursor)
+            elif user_choice == 3:
+                get_dependent_data_perjob(mycursor)
             elif user_choice == 9:
                 print("Bye!!!")
                 break
