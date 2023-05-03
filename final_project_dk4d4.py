@@ -255,6 +255,41 @@ def get_location_data_byregion(mycursor):
 #____________________________________________VIEW DATA END_____________________________________
 
 #____________________________________________ADD DATA__________________________________________
+def add_dependent(mycursor):
+        #get user input
+        user_choice_first = input("Enter dependent first name: ")
+        user_choice_last = input("Enter dependent last name: ")
+        user_choice_relation = input("Enter relationship: ")
+        user_choice_employeeId = input("Enter employee ID: ")
+        
+        sql_query = f"Insert Into dependents (first_name, last_name, relationship, employee_id) Values ('{user_choice_first}', '{user_choice_last}', '{user_choice_relation}', {user_choice_employeeId});"
+
+        try:
+            #execute the query
+            mycursor.execute(sql_query)
+            
+            print(f"\nSuccess: {mycursor.rowcount} dependent added")
+        except mysql.connector.Error as error:
+            print(f"\nFailed to insert into dependents table {error}")
+
+def add_job(mycursor):
+    #get user input
+    job_title = input("Enter new job title: ")
+    while(True):
+        try:
+            min_salary = float(input("Enter minimum salary: "))
+            max_salary = float(input("Enter maximum sallary: "))
+            if max_salary < min_salary:
+                print("Maximum salary can't be less than the minimum salary")
+                continue
+            else:
+                sql_query = f"Insert into jobs (job_title, min_salary, max_salary) Values ('{job_title}', '{min_salary}', '{max_salary}');"
+            mycursor.execute(sql_query)
+            print(f"\nSuccess: {mycursor.rowcount} job added")
+            break
+        except mysql.connector.Error as error:
+            print(f"\nFailed to insert into dependents table {error}")
+            break
 
 #____________________________________________ADD DATA END______________________________________
 
@@ -315,6 +350,7 @@ def main():
 
     #create database cursor
     mycursor = mydb.cursor()
+
     while (True):
         try:
             user_choice = get_user_choice()
@@ -334,6 +370,12 @@ def main():
                 get_dependent_data_byemployee(mycursor)
             elif user_choice == 8:
                 get_location_data_byregion(mycursor)
+            elif user_choice == 9:
+                add_dependent(mycursor)
+                mydb.commit()
+            elif user_choice == 10:
+                add_job(mycursor)
+                mydb.commit()
             elif user_choice == 17:
                 print("Bye!!!")
                 break
