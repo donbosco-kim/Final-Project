@@ -310,31 +310,25 @@ def add_job(mycursor):
 
 
 def delete_employee(mycursor):
-    # get user input
-    while (True):
-        try:
-            employee_id = int(input("Enter employee ID to be deleted: "))
-            delete_query = f"Delete from employees where employee_id = '{employee_id}';"
-            mycursor.execute(delete_query)
-            print(f"\nSuccess: {mycursor.rowcount} employee was deleted")
-            break
-        except mysql.connector.Error as error:
-            print(f"\nFailed to delete employee from employees table {error}")
-            # print("Please enter a number")
-            break
+    try:
+        employee_id = int(input("Enter employee ID to be deleted: "))
+        delete_query = f"Delete from employees where employee_id = '{employee_id}';"
+        mycursor.execute(delete_query)
+        print(f"\nSuccess: {mycursor.rowcount} employee was deleted")
+    except mysql.connector.Error as error:
+        print(f"\nFailed to delete employee from employees table {error}")
+        # print("Please enter a number")
 
 
 def delete_dependent(mycursor):
-    while (True):
-        try:
-            dependent_id = int(input("Enter dependent ID to be deleted: "))
-            delete_query = f"Delete from dependents where dependent_id = '{dependent_id}';"
-            mycursor.execute(delete_query)
-            print(f"\nSuccess: {mycursor.rowcount} dependent was deleted")
-            break
-        except mysql.connector.Error as error:
-            print(f"\nFailed to delete dependent from dependent table {error}")
-            break
+    try:
+        dependent_id = int(input("Enter dependent ID to be deleted: "))
+        delete_query = f"Delete from dependents where dependent_id = '{dependent_id}';"
+        mycursor.execute(delete_query)
+        print(f"\nSuccess: {mycursor.rowcount} dependent was deleted")
+    except mysql.connector.Error as error:
+        print(f"\nFailed to delete dependent from dependent table {error}")
+
 
 # ____________________________________________DELETE DATA END______________________________________
 
