@@ -1,6 +1,6 @@
 import mysql.connector
 
-# VIEW DATA
+# ____________________________________VIEW DATA____________________________________________
 
 # View employee count data per country
 
